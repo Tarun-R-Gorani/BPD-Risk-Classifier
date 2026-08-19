@@ -1,0 +1,4 @@
+1. Removing 5 gene expressions from the expression.csv since they do not have any BPD mapping to infants. 
+    These expressions have already been removed in metadata file to handle missing values problem. 
+
+    ['GSM804031', 'GSM804049', 'GSM804129', 'GSM804228', 'GSM804246']
