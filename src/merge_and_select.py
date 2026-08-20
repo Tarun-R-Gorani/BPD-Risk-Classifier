@@ -144,9 +144,9 @@ def main():
             "ANOVA failed to calculate p-values across all genes. Check dataset variables."
         )
 
-    print("\n5. Selecting top 100 trajectory-informative genes...")
-    top_100_safe = sorted(p_values, key=p_values.get)[:100]
-    top_100_genes = [reverse_map[g] for g in top_100_safe]
+    print("\n5. Selecting top 500 trajectory-informative genes...")
+    top_500_safe = sorted(p_values, key=p_values.get)[:500]
+    top_500_genes = [reverse_map[g] for g in top_500_safe]
 
     merged_df.rename(columns=reverse_map, inplace=True)
 
@@ -158,18 +158,18 @@ def main():
         "birth weight (grams)",
         "bpd_group",
     ]
-    final_df = merged_df[clinical_cols + top_100_genes]
+    final_df = merged_df[clinical_cols + top_500_genes]
 
     output_path = (
-        "data/processed/gbtm_input_long_format.csv"
+        "data/processed/gbtm_input_long_format(500_genes).csv"
         if os.path.exists("data/processed")
-        else "../data/processed/gbtm_input_long_format.csv"
+        else "../data/processed/gbtm_input_long_format(500_genes).csv"
     )
 
     print(f"6. Saving final dataset to {output_path}...")
     final_df.to_csv(output_path, index=False)
     print(
-        f"\nSUCCESS: Saved 'gbtm_input_long_format.csv' containing {final_df.shape[1]} columns!"
+        f"\nSUCCESS: Saved 'gbtm_input_long_format(500_genes).csv' containing {final_df.shape[1]} columns!"
     )
 
 
