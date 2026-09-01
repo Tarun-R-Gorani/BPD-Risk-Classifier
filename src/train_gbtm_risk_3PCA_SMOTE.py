@@ -5,6 +5,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from sklearn.decomposition import PCA
+from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     auc,
@@ -196,10 +198,9 @@ def _find_data_path():
     """Look in a few likely spots so this runs whether launched from repo
     root, a scripts/ subfolder, or right next to the CSV."""
     candidates = [
-        "data/processed/gbtm_input_long_format.csv",
         "../data/processed/gbtm_input_long_format.csv",
-        "data/processed/gbtm_input_long_format_500_genes_.csv",
-        "gbtm_input_long_format_500_genes_.csv",
+        "../data/processed/gbtm_input_long_format.csv",
+        "../data/processed/gbtm_input_long_format_500_genes_.csv"
     ]
     for path in candidates:
         if os.path.exists(path):
@@ -280,7 +281,7 @@ def main():
     print(f"   {infant_df['bpd_target'].value_counts().sort_index().to_dict()}")
     print(f"   Resampling method: {SMOTE_METHOD}")
 
-    print("4. Evaluating Multi-class BPD Risk Classifier using Leave-One-Out (LOOCV)...")
+    print("4. Evaluating Multi-class BPD Risk Classifier using stratified K fold")
 
     # Random Forest trains on 8 features
     feature_cols = [
@@ -293,10 +294,12 @@ def main():
     X = infant_df[feature_cols]
     y = infant_df["bpd_target"]
 
-    loo = LeaveOneOut()
+
+
+    skf = StratifiedKFold(n_splits=7, shuffle=True, random_state=42)
     y_true, y_pred, y_probs = [], [], []
 
-    for train_idx, test_idx in loo.split(X):
+    for train_idx, test_idx in skf.split(X, y):
         X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]
         y_train, y_test = y.iloc[train_idx], y.iloc[test_idx]
 
@@ -306,17 +309,34 @@ def main():
             X_train, y_train, CATEGORICAL_COLS, n_groups, method=SMOTE_METHOD
         )
 
-        clf = RandomForestClassifier(n_estimators=100, random_state=42)
+
+        # RF tuning
+        param_grid = {
+            'n_estimators': [100, 200, 300],
+            'max_depth': [5, 10, 15, None],
+            'min_samples_leaf': [2, 4, 8],
+            'min_samples_split': [5, 10],
+        }
+
+        # Inside your CV loop, replace single clf with GridSearchCV
+        clf = GridSearchCV(
+            RandomForestClassifier(random_state=42, class_weight='balanced'),
+            param_grid, cv=3, scoring='f1_weighted', n_jobs=-1
+        )
         clf.fit(X_train_res, y_train_res)
+        # Use clf.best_estimator_ for predictions
 
-        y_true.append(y_test.values[0])
-        y_pred.append(clf.predict(X_test)[0])
+        # Collect ALL predictions from this fold, not just first sample
+        y_true.extend(y_test.values)
+        y_pred.extend(clf.predict(X_test))
 
-        probs = clf.predict_proba(X_test)[0]
-        full_prob = np.zeros(len(unique_classes))
-        for idx, c in enumerate(clf.classes_):
-            full_prob[c] = probs[idx]
-        y_probs.append(full_prob)
+        # Collect probabilities for ALL test samples
+        probs = clf.predict_proba(X_test)
+        for pred_probs in probs:
+            full_prob = np.zeros(len(unique_classes))
+            for idx, c in enumerate(clf.classes_):
+                full_prob[c] = pred_probs[idx]
+            y_probs.append(full_prob)
 
     y_probs = np.array(y_probs)
 
@@ -337,7 +357,7 @@ def main():
     )
     print(f"   Balanced class distribution:  {y_final_res.value_counts().sort_index().to_dict()}")
 
-    final_clf = RandomForestClassifier(n_estimators=100, random_state=42)
+    final_clf = RandomForestClassifier(n_estimators=100, random_state=42, class_weight='balanced')
     final_clf.fit(X_final_res, y_final_res)
 
     print("6. Saving trained models for later use...")
