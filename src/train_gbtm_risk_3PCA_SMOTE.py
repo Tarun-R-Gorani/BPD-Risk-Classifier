@@ -198,9 +198,10 @@ def _find_data_path():
     """Look in a few likely spots so this runs whether launched from repo
     root, a scripts/ subfolder, or right next to the CSV."""
     candidates = [
-        "../data/processed/gbtm_input_long_format.csv",
-        "../data/processed/gbtm_input_long_format.csv",
-        "../data/processed/gbtm_input_long_format_500_genes_.csv"
+     #   "../data/processed/gbtm_input_long_format.csv",
+     #   "../data/processed/gbtm_input_long_format.csv",
+     #   "../data/processed/gbtm_input_long_format_500_genes_.csv",
+     "data/processed/gbtm_input_long_format(500_genes).csv"
     ]
     for path in candidates:
         if os.path.exists(path):
