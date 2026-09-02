@@ -6,7 +6,7 @@ import pandas as pd
 import seaborn as sns
 from sklearn.decomposition import PCA
 from sklearn.model_selection import StratifiedKFold
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     auc,
@@ -319,9 +319,9 @@ def main():
         }
 
         # Inside your CV loop, replace single clf with GridSearchCV
-        clf = GridSearchCV(
+        clf = RandomizedSearchCV(
             RandomForestClassifier(random_state=42, class_weight='balanced'),
-            param_grid, cv=3, scoring='f1_weighted', n_jobs=-1
+            n_iter=20, param_distributions=param_grid, cv=3, scoring='f1_weighted', n_jobs=-1
         )
         clf.fit(X_train_res, y_train_res)
         # Use clf.best_estimator_ for predictions
