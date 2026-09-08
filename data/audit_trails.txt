@@ -108,3 +108,31 @@ Model Summary:
    Total variance explained: 0.7842
    Missing gene values in full data: 0
    Expression shape: (289, 500)
+
+
+Metrics for LightGBM
+
+precision    recall  f1-score   support
+
+      No BPD       0.66      0.82      0.73        40
+    Mild BPD       0.42      0.37      0.39        38
+Moderate BPD       0.00      0.00      0.00        13
+  Severe BPD       0.10      0.07      0.08        15
+
+    accuracy                           0.45       106
+   macro avg       0.30      0.32      0.30       106
+weighted avg       0.42      0.45      0.43       106
+Macro F1: 0.301924882629108
+Weighted F1: 0.4294268757197272
+Balanced Accuracy: 0.3150219298245614
+
+Model Summary:
+   Number of gene features: 500
+   PCA components retained: 12
+   GBTM groups per PC: 4
+   Top genes selected: 20
+   PCA explained variance: [0.21054622 0.15425269 0.12012772 0.0974989  0.05165673 0.04647328
+ 0.03463954 0.02044432 0.01661176 0.01161942 0.01062849 0.00973545]
+   Total variance explained: 0.7842
+   Missing gene values in full data: 0
+   Expression shape: (289, 500)
