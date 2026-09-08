@@ -80,3 +80,31 @@ Model Summary:
    Total variance explained: 0.7842
    Missing gene values in full data: 0
    Expression shape: (289, 500)
+
+
+   8/9/26 metrics for XGBoost
+
+precision    recall  f1-score   support
+
+      No BPD       0.67      0.70      0.68        40
+    Mild BPD       0.46      0.47      0.47        38
+Moderate BPD       0.09      0.08      0.08        13
+  Severe BPD       0.50      0.47      0.48        15
+
+    accuracy                           0.51       106
+   macro avg       0.43      0.43      0.43       106
+weighted avg       0.50      0.54      0.50       106
+Macro F1: 0.4291378127059372
+Weighted F1: 0.5038492413268267
+Balanced Accuracy: 0.4293184885290148
+
+Model Summary:
+   Number of gene features: 500
+   PCA components retained: 12
+   GBTM groups per PC: 4
+   Top genes selected: 20
+   PCA explained variance: [0.21054622 0.15425269 0.12012772 0.0974989 0.05165673 
+   0.04647328 0.03463954 0.02044432 0.01661176 0.01161942 0.01062849 0.00973545]
+   Total variance explained: 0.7842
+   Missing gene values in full data: 0
+   Expression shape: (289, 500)
