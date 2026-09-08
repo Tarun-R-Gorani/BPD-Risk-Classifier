@@ -112,9 +112,9 @@ class PureGBTM:
 
 def main():
     print("1. Loading long-format dataset...")
-    data_path = "data/processed/gbtm_input_long_format.csv"
+    data_path = "data/processed/gbtm_input_long_format(500_genes).csv"
     if not os.path.exists(data_path):
-        data_path = "../data/processed/gbtm_input_long_format.csv"
+        data_path = "../data/processed/gbtm_input_long_format(500_genes).csv()"
 
     df = pd.read_csv(data_path)
     gene_cols = [

@@ -2,3 +2,55 @@
     These expressions have already been removed in metadata file to handle missing values problem. 
 
     ['GSM804031', 'GSM804049', 'GSM804129', 'GSM804228', 'GSM804246']
+
+    tested with PCA 5 
+    ================ 4-CLASS BPD GBTM EVALUATION REPORT (3 PCs) ================
+              precision    recall  f1-score   support
+
+      No BPD       0.72      0.78      0.75        40
+    Mild BPD       0.64      0.61      0.62        38
+Moderate BPD       0.08      0.08      0.08        13
+  Severe BPD       0.47      0.47      0.47        15
+
+    accuracy                           0.58       106
+   macro avg       0.48      0.48      0.48       106
+weighted avg       0.58      0.58      0.58       106
+
+5. Retraining final Risk Classifier on full (resampled) dataset...
+   Original class distribution:  {0: 40, 1: 38, 2: 13, 3: 15}
+   Balanced class distribution:  {0: 40, 1: 40, 2: 40, 3: 40}
+Number of gene features: 100
+['CYFIP1', 'TNFSF10', 'CLEC9A', 'LILRB4', 'OASL', 'DDX58', 'OAS1', 'SIGLEC1', 'KCNJ2', 'TNFSF13B']
+['CRISP2', 'SDCBP', 'CAV2', 'TAP1', 'OAS3', 'RGL1', 'ADSS', 'ZDHHC13', 'DAPP1', 'ADAM23']
+Missing gene values: 0
+Expression shape: (289, 100)
+PCA explained variance: [0.33840611 0.15733484 0.11815719 0.06504235 0.04042288]
+Total variance explained: 0.7193633716594348
+Best parameters: {'svm__gamma': 0.1, 'svm__C': 1}
+Macro F1: 0.4788190600238793
+Weighted F1: 0.580576789565196
+Balanced Accuracy: 0.48096322537112013
+6. Saving trained models for later use...
+
+going back to pca 3
+
+Your previous SMOTENC result was approximately:
+
+Macro F1: 0.492
+Balanced accuracy: 0.494
+Accuracy: 0.57
+
+Now without SMOTE:
+
+Macro F1: 0.519
+Balanced accuracy: 0.546
+Accuracy: 0.58
+
+removed smote.
+
+2/9/26 23:46 pm **RBF vs Polynomial SVM Experiment:** The RBF and polynomial SVM kernels were evaluated for 4-class BPD severity classification using the same 3-PC GBTM-derived feature set and class-weighted SVM approach. 
+The RBF kernel achieved an accuracy of **58%**, macro F1 of **0.519**, weighted F1 of **0.577**, and balanced accuracy of **0.546**. 
+The polynomial kernel, with the best configuration of **degree = 2, C = 1, gamma = scale, and coef0 = 0.1**, achieved a higher accuracy of **61%** and weighted F1 of **0.604**, while macro F1 remained almost unchanged at **0.518** and balanced accuracy decreased to **0.523**.
+ Polynomial SVM improved Mild BPD classification (F1: **0.61 vs 0.48**) but showed lower performance for Moderate and Severe BPD. 
+ Therefore, the polynomial kernel demonstrated improved overall accuracy but did not provide a clear improvement in balanced multi-class performance over RBF.
+
