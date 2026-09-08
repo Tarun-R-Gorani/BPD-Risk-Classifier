@@ -54,3 +54,29 @@ The polynomial kernel, with the best configuration of **degree = 2, C = 1, gamma
  Polynomial SVM improved Mild BPD classification (F1: **0.61 vs 0.48**) but showed lower performance for Moderate and Severe BPD. 
  Therefore, the polynomial kernel demonstrated improved overall accuracy but did not provide a clear improvement in balanced multi-class performance over RBF.
 
+8/9/26 metrics for random forest
+
+precision    recall  f1-score   support
+
+      No BPD       0.69      0.78      0.73        40
+    Mild BPD       0.44      0.53      0.48        38
+Moderate BPD       0.00      0.00      0.00        13
+  Severe BPD       0.50      0.40      0.44        15
+
+    accuracy                           0.54       106
+   macro avg       0.41      0.43      0.41       106
+weighted avg       0.49      0.54      0.51       106
+Macro F1: 0.41394597999842503
+Weighted F1: 0.5109093421410391
+Balanced Accuracy: 0.4253289473684211
+
+Model Summary:
+   Number of gene features: 500
+   PCA components retained: 12
+   GBTM groups per PC: 4
+   Top genes selected: 20
+   PCA explained variance: [0.21054622 0.15425269 0.12012772 0.0974989  0.05165673 0.04647328
+ 0.03463954 0.02044432 0.01661176 0.01161942 0.01062849 0.00973545]
+   Total variance explained: 0.7842
+   Missing gene values in full data: 0
+   Expression shape: (289, 500)
