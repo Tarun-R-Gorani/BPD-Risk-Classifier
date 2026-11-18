@@ -9,4 +9,11 @@
     <circle cx="517" cy="663" r="9"/><circle cx="443" cy="770" r="8"/><circle cx="560" cy="841" r="7"/>
     <circle cx="1083" cy="663" r="9"/><circle cx="1157" cy="770" r="8"/><circle cx="1040" cy="841" r="7"/>
   </g>
+  <g stroke="#d97732" stroke-linecap="round" stroke-linejoin="round" opacity=".38">
+    <path stroke-width="10" d="M800 95v285m0-18c-72 23-118 73-166 145m166-145c72 23 118 73 166 145"/>
+    <path stroke-width="7" d="M634 520c-33 15-59 38-80 67m412-67c33 15 59 38 80 67"/>
+  </g>
+  <g fill="#d97732" opacity=".32">
+    <circle cx="517" cy="663" r="5"/><circle cx="1083" cy="663" r="5"/>
+  </g>
 </svg>

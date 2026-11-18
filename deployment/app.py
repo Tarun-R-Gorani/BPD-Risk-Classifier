@@ -120,11 +120,11 @@ def inject_styles() -> None:
         [data-testid="stAppViewContainer"] {
             background-color: #f7fbfd;
             background-image:
-                linear-gradient(rgba(247,251,253,.75), rgba(245,250,252,.84)),
+                linear-gradient(rgba(247,251,253,.66), rgba(245,250,252,.76)),
                 __BACKGROUND_IMAGE__,
-                radial-gradient(ellipse at 5% 0%, rgba(12,124,134,.085), transparent 32%),
-                radial-gradient(ellipse at 96% 4%, rgba(49,101,137,.07), transparent 30%),
-                linear-gradient(145deg, #f7fbfd 0%, #eff6f9 56%, #f5fafb 100%);
+                radial-gradient(ellipse at 2% 2%, rgba(89,201,210,.17), transparent 37%),
+                radial-gradient(ellipse at 100% 4%, rgba(248,174,115,.2), transparent 32%),
+                linear-gradient(145deg, #f4fbfc 0%, #edf7f9 56%, #fff7ef 100%);
             background-position: center top;
             background-size: cover;
             background-attachment: fixed;
@@ -134,16 +134,23 @@ def inject_styles() -> None:
         .main .block-container { max-width: 1380px; padding: 1.3rem 2rem 3rem; }
         h1, h2, h3 { color: #163b56; letter-spacing: -.025em; }
         p, li, label { color: #3c5669; }
-        a { color: #087f89 !important; }
+        a { color: #087f89 !important; text-decoration-color: rgba(217,119,50,.55); }
+        a:hover { color: #c56725 !important; text-decoration-color: #c56725; }
         [data-testid="stVerticalBlockBorderWrapper"] {
             background: rgba(255,255,255,.9); border: 1px solid #dce9ef;
             border-radius: 18px; box-shadow: 0 10px 28px rgba(25,64,88,.055);
+        }
+        .st-key-home_about_card [data-testid="stVerticalBlockBorderWrapper"],
+        .st-key-home_why_card [data-testid="stVerticalBlockBorderWrapper"],
+        .st-key-home_project_card [data-testid="stVerticalBlockBorderWrapper"],
+        .st-key-home_model_card [data-testid="stVerticalBlockBorderWrapper"] {
+            border-top: 3px solid #e6a06a;
         }
         [data-testid="stMetric"] {
             background: #fff; border: 1px solid #dce9ef;
             border-radius: 16px; padding: 14px 18px;
         }
-        [data-testid="stMetricValue"] { color: #087f89; }
+        [data-testid="stMetricValue"] { color: #cb6d2c; }
         [data-testid="stFileUploaderDropzone"] {
             background: rgba(244,250,252,.96); border: 1px dashed #a9cbd6;
             border-radius: 14px; color: #244b63;
@@ -153,6 +160,10 @@ def inject_styles() -> None:
         [data-testid="stFileUploaderDropzone"] button {
             background: #fff !important; color: #176b78 !important;
             border: 1px solid #b7d4dd !important; border-radius: 9px !important;
+        }
+        [data-testid="stFileUploaderDropzone"] button:hover {
+            color: #b85d20 !important; border-color: #d97732 !important;
+            background: #fff8f1 !important;
         }
         [data-baseweb="select"] > div {
             background: #fff !important; border-color: #c9dce4 !important;
@@ -164,7 +175,8 @@ def inject_styles() -> None:
         }
         [data-baseweb="popover"] [role="option"] { color: #244b63 !important; }
         [data-baseweb="tag"] {
-            background: #e4f3f4 !important; color: #176b78 !important;
+            background: #fff1e5 !important; color: #9f501c !important;
+            border: 1px solid #f0d1b8 !important;
         }
         [data-testid="stRadio"] label, [data-testid="stCheckbox"] label {
             color: #34566b !important;
@@ -192,6 +204,7 @@ def inject_styles() -> None:
         }
         div.stButton > button:hover, div.stDownloadButton > button:hover {
             transform: translateY(-1px); box-shadow: 0 8px 20px rgba(8,91,106,.14);
+            border-color: #df9760 !important;
         }
         div.stButton > button[kind="primary"], div.stDownloadButton > button[kind="primary"] {
             background: linear-gradient(120deg, #087f89, #12657c);
@@ -201,18 +214,84 @@ def inject_styles() -> None:
             background: rgba(255,255,255,.9); color: #244b63; border: 1px solid #d4e3ea;
         }
         .site-brand { color: #163b56; font-size: 1.15rem; font-weight: 800; padding: .55rem 0; }
-        .hero {
-            background: linear-gradient(118deg, #123a58 0%, #0c6577 58%, #0b8588 100%);
+        .site-brand span { color: #d97732 !important; }
+        .hero { 
+            background: linear-gradient(118deg, #123a58 0%, #0c6577 54%, #0b8588 84%, #c8753a 125%);
             color: #fff; border-radius: 24px; padding: 2.2rem 2.5rem;
             box-shadow: 0 18px 42px rgba(18,58,88,.18); margin: .5rem 0 1.5rem;
         }
         .hero h1 { color: #fff; font-size: clamp(2.2rem,4vw,3.6rem); margin: .35rem 0 .65rem; }
         .hero p { color: rgba(255,255,255,.86); font-size: 1.08rem; max-width: 760px; }
-        .hero-kicker { color: #b8e9e8; font-size: .78rem; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+        .hero-kicker { color: #ffd2ad; font-size: .78rem; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+        .st-key-home_about_card, .st-key-home_why_card,
+        .st-key-home_project_card, .st-key-home_model_card {
+            min-height: 250px;
+        }
+        .st-key-home_about_card [data-testid="stVerticalBlockBorderWrapper"],
+        .st-key-home_why_card [data-testid="stVerticalBlockBorderWrapper"],
+        .st-key-home_project_card [data-testid="stVerticalBlockBorderWrapper"],
+        .st-key-home_model_card [data-testid="stVerticalBlockBorderWrapper"] {
+            min-height: 250px; height: 100%;
+        }
+        .main .block-container { max-width: 1460px; padding: 1rem 2rem 3rem; }
+        div.stButton > button { border-radius: 15px; min-height: 2.9rem; }
+        div.stButton > button[kind="secondary"] { box-shadow: 0 4px 12px rgba(27,74,92,.06); }
+        div.stButton > button[kind="secondary"]:hover {
+            background: #fff8f1 !important; color: #984b19 !important;
+        }
         @media (max-width: 750px) {
             .main .block-container { padding-left: 1rem; padding-right: 1rem; }
             .hero { padding: 1.5rem; }
+            .hero::after { opacity: .18 !important; width: 70% !important; }
+            .top-nav-row { gap: .2rem; }
         }
+        .top-nav-row { align-items: center; }
+        .site-brand { font-size: 1.2rem; white-space: nowrap; }
+        .site-brand .brand-orange { color: #c7611c !important; }
+        .hero { position: relative; overflow: hidden; isolation: isolate; }
+        .hero::after {
+            content: ""; position: absolute; z-index: -1; inset: 0 0 0 auto;
+            width: 43%; opacity: .43; pointer-events: none;
+            background-image: linear-gradient(90deg, #0c6577 0%, rgba(12,101,119,.15) 58%, transparent 100%), __BACKGROUND_IMAGE__;
+            background-repeat: no-repeat; background-size: cover, contain;
+            background-position: center, right center;
+        }
+        .hero::before {
+            content: ""; position: absolute; z-index: -1; right: -2%; bottom: 22px;
+            width: 38%; height: 44px; border-top: 4px solid #f18b40;
+            border-radius: 52% 48% 0 0; transform: rotate(-8deg);
+            filter: drop-shadow(0 0 8px rgba(255,170,92,.6));
+        }
+        .hero h1 .hero-orange { color: #ff8b38; }
+        .hero-kicker::after {
+            content: ""; display: block; width: 54px; height: 3px;
+            margin-top: .55rem; background: #f18b40; border-radius: 4px;
+        }
+        .page-hero {
+            position: relative; overflow: hidden; margin: .5rem 0 1.5rem;
+            padding: 1.5rem 2rem; border-radius: 21px; color: #fff;
+            background: linear-gradient(115deg, #10435b, #08727b 74%, #168c8d);
+            box-shadow: 0 14px 36px rgba(16,67,91,.16);
+        }
+        .page-hero::after {
+            content: ""; position: absolute; right: -2%; bottom: 15px; width: 29%;
+            height: 35px; border-top: 3px solid #f18b40; border-radius: 50%;
+            transform: rotate(-8deg); opacity: .9;
+        }
+        .page-hero h1 { color: #fff; margin: 0; font-size: clamp(1.8rem,3vw,2.5rem); }
+        .page-hero p { color: rgba(255,255,255,.84); margin: .45rem 0 0; }
+        .page-kicker {
+            color: #ffd2ad; text-transform: uppercase; letter-spacing: .14em;
+            font-size: .72rem; font-weight: 750; margin-bottom: .35rem;
+        }
+        .home-card-title { display:flex; align-items:center; gap:.8rem; margin-bottom:.35rem; }
+        .home-card-title h3 { margin: 0; color: #10475c; font-size: 1.3rem; }
+        .home-icon {
+            display:grid; place-items:center; width:3.1rem; height:3.1rem;
+            border-radius:13px; background:#fff0e3; color:#bd5d1c; font-size:1.5rem;
+        }
+        .home-icon-teal { background:#def3f4; color:#087f89; }
+        .main .block-container h2 { border-left: 5px solid #f18b40; padding-left: .65rem; }
         </style>
         """.replace("__BACKGROUND_IMAGE__", background_image),
         unsafe_allow_html=True,
@@ -223,7 +302,11 @@ def render_top_navigation() -> None:
     active_page = st.session_state.get("active_page", "Home")
     columns = st.columns([1.35, .78, .78, .78, 1.22, 1.48])
     with columns[0]:
-        st.markdown('<div class="site-brand">BPD <span style="color:#0b8588">/</span> Insight</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="site-brand">BPD <span style="color:#0b8588">/</span> '
+            '<span class="brand-orange">Insight</span></div>',
+            unsafe_allow_html=True,
+        )
     for column, page in zip(columns[1:], PAGES):
         with column:
             if st.button(page, key=f"top_nav_{page}",
@@ -233,10 +316,18 @@ def render_top_navigation() -> None:
     st.markdown("<hr style='border:0;border-top:1px solid #d9e7ed;margin:.35rem 0 1.6rem'>", unsafe_allow_html=True)
 
 
+def render_page_hero(title: str, description: str) -> None:
+    st.markdown(
+        '<div class="page-hero"><div class="page-kicker">BPD Insight</div>'
+        f'<h1>{title}</h1><p>{description}</p></div>',
+        unsafe_allow_html=True,
+    )
+
+
 def render_home(artifact) -> None:
     st.markdown(
         '<div class="hero"><div class="hero-kicker">Neonatal respiratory research</div>'
-        '<h1>Understanding BPD through data</h1>'
+        '<h1>Understanding <span class="hero-orange">BPD</span> through data</h1>'
         '<p>Explore bronchopulmonary dysplasia, follow gene-expression patterns across visits, '
         'and try a two-stage research classifier.</p></div>',
         unsafe_allow_html=True,
@@ -244,8 +335,11 @@ def render_home(artifact) -> None:
 
     about, why = st.columns([1.15, 1])
     with about:
-        with st.container(border=True):
-            st.subheader("What is BPD?")
+        with st.container(border=True, key="home_about_card"):
+            st.markdown(
+                '<div class="home-card-title"><span class="home-icon">🫁</span>'
+                '<h3>What is BPD?</h3></div>', unsafe_allow_html=True
+            )
             st.write(
                 "Bronchopulmonary dysplasia (BPD) is a chronic lung condition that most often "
                 "affects babies born prematurely. Their lungs may still be developing, and some "
@@ -256,8 +350,11 @@ def render_home(artifact) -> None:
                 "https://www.nhlbi.nih.gov/health/bronchopulmonary-dysplasia)."
             )
     with why:
-        with st.container(border=True):
-            st.subheader("Why study it?")
+        with st.container(border=True, key="home_why_card"):
+            st.markdown(
+                '<div class="home-card-title"><span class="home-icon home-icon-teal">⚕</span>'
+                '<h3>Why study it?</h3></div>', unsafe_allow_html=True
+            )
             st.write(
                 "BPD can have a complex course, and respiratory needs may continue after the "
                 "newborn period. Studying clinical and molecular patterns can help researchers "
@@ -268,7 +365,7 @@ def render_home(artifact) -> None:
     st.subheader("About this project")
     project, model = st.columns([1.25, 1])
     with project:
-        with st.container(border=True):
+        with st.container(border=True, key="home_project_card"):
             st.write(
                 "The classifier combines three clinical measurements with gene-expression "
                 "features from the 24-33 day timepoint. Stage 1 separates No BPD from Any BPD; "
@@ -277,7 +374,7 @@ def render_home(artifact) -> None:
             if st.button("Explore the model", type="secondary"):
                 go_to("Model & Methodology")
     with model:
-        with st.container(border=True):
+        with st.container(border=True, key="home_model_card"):
             st.metric("Model inputs", f"{len(artifact['features']):,}")
             st.caption(
                 f"{artifact.get('candidate_gene_count', 0):,} gene symbols + "
@@ -288,8 +385,8 @@ def render_home(artifact) -> None:
 
 
 def render_predict(artifact) -> None:
-    st.title("Predict BPD severity")
-    st.write(
+    render_page_hero(
+        "Predict BPD severity",
         "Upload one sample per row. Required inputs are three clinical fields and "
         f"{artifact.get('candidate_gene_count', 0):,} mapped gene-symbol measurements."
     )
@@ -352,7 +449,7 @@ def render_predict(artifact) -> None:
 
 
 def render_results() -> None:
-    st.title("Prediction results")
+    render_page_hero("Prediction results", "Review sample-level predictions and export the results table.")
     results = st.session_state.get("prediction_results")
     if results is None:
         st.info("No predictions yet. Go to Predict and upload a prepared CSV.")
@@ -389,8 +486,8 @@ def render_results() -> None:
 
 
 def render_methodology(artifact) -> None:
-    st.title("Model & Methodology")
-    st.write(
+    render_page_hero(
+        "Model & Methodology",
         "The deployed model uses a timepoint-3 sample view and a two-stage "
         "classification hierarchy."
     )
@@ -455,10 +552,10 @@ def render_methodology(artifact) -> None:
 
 
 def render_timeline() -> None:
-    st.title("Timeline Explorer")
-    st.write(
-        "Explore aggregate gene-expression trends across the cohort’s three "
-        "observed timepoints, grouped by recorded BPD category."
+    render_page_hero(
+        "Timeline Explorer",
+        "Explore aggregate gene-expression trends across the cohort's three observed timepoints, "
+        "grouped by recorded BPD category."
     )
     if not TIMELINE_PATH.exists():
         st.error(f"Longitudinal dataset was not found at {TIMELINE_PATH}")
