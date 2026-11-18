@@ -36,6 +36,11 @@ The saved grouped five-fold cross-validation estimates for this cohort are
 61.9% accuracy and 54.0% macro-F1. These are evaluation results, not a promise
 of performance on a different cohort.
 
+
+## Git LFS data files
+
+The timeline dataset and synthetic prediction template are tracked with Git LFS. A GitHub-generated source ZIP can contain LFS pointer text files instead of the underlying CSV data. For a complete local checkout, run `git lfs install` before cloning and `git lfs pull` from the repository root. The app detects missing LFS content and displays an explanatory message rather than treating the pointer as a CSV.
+
 ## Run locally
 
 From the repository root:
