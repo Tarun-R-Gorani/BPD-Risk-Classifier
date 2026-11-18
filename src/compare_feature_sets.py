@@ -9,11 +9,17 @@ Run from the repository root:
 
 from __future__ import annotations
 
+import argparse
 import re
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from bpd_feature_utils import variance_scores
 from sklearn.base import clone
 from sklearn.compose import ColumnTransformer
@@ -26,7 +32,6 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-ROOT = Path(__file__).resolve().parents[1]
 METADATA = ROOT / "data/processed/GSE32472_full_metadata.csv"
 RAW_EXPRESSION = ROOT / "data/processed/GSE32472_expression_new.csv"
 PLATFORM = ROOT / "data/raw/GPL6244.txt"
@@ -289,6 +294,47 @@ def evaluate_ordinal(kind, data, genes):
     }
 
 
+def print_stage_metrics(metrics: dict) -> None:
+    """Print the combined model's two-stage accuracy and macro-F1 clearly."""
+    print("\nCombined model - grouped five-fold cross-validation")
+    if "accuracy" in metrics and "macro_f1" in metrics:
+        print(
+            "End-to-end (No/Mild/Moderate/Severe BPD): "
+            f"accuracy {metrics['accuracy']:.1%} | macro-F1 {metrics['macro_f1']:.1%}"
+        )
+    print(
+        "Stage 1 (No BPD vs Any BPD): "
+        f"accuracy {metrics['stage1_accuracy']:.1%} | "
+        f"macro-F1 {metrics['stage1_macro_f1']:.1%}"
+    )
+    print(
+        "Stage 2 (severity among actual BPD cases): "
+        f"accuracy {metrics['stage2_oracle_accuracy']:.1%} | "
+        f"macro-F1 {metrics['stage2_oracle_macro_f1']:.1%}"
+    )
+
+
+def print_saved_stage_metrics() -> None:
+    """Display saved stage scores without rerunning model training."""
+    path = OUTPUT / "combined_stage_metrics.csv"
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Saved stage metrics not found at {path}. Run the comparison first."
+        )
+    saved = pd.read_csv(path)
+    row = saved.loc[saved["feature_set"] == "combined"]
+    if row.empty:
+        raise ValueError(f"No combined-model row found in {path}")
+    metrics = row.iloc[0].to_dict()
+    summary_path = OUTPUT / "summary_metrics.csv"
+    if summary_path.exists():
+        summary = pd.read_csv(summary_path)
+        combined = summary.loc[summary["feature_set"] == "combined"]
+        if not combined.empty:
+            metrics.update(combined.iloc[0].to_dict())
+    print_stage_metrics(metrics)
+
+
 def main():
     data, genes = load_data()
     OUTPUT.mkdir(parents=True, exist_ok=True)
@@ -302,6 +348,8 @@ def main():
         pd.DataFrame(summaries).to_csv(OUTPUT / "summary_metrics.csv", index=False)
         pd.DataFrame(fold_rows).to_csv(OUTPUT / "fold_metrics.csv", index=False)
         print(summary, flush=True)
+        if kind == "combined":
+            print_stage_metrics(summary)
     stability = pd.DataFrame(selection_rows)
     if not stability.empty:
         stability.groupby(["feature_set", "stage", "gene"]).size().rename(
@@ -323,4 +371,14 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Compare BPD feature sets and print stage metrics.")
+    parser.add_argument(
+        "--show-saved",
+        action="store_true",
+        help="Print saved combined Stage 1 and Stage 2 scores without retraining.",
+    )
+    arguments = parser.parse_args()
+    if arguments.show_saved:
+        print_saved_stage_metrics()
+    else:
+        main()

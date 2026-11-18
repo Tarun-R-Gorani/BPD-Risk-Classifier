@@ -2,6 +2,11 @@
 
 This folder deploys the fold-local gene-filtered two-step BPD model.
 
+The Streamlit interface has five pages: Home, Predict, Results, Timeline
+Explorer, and Model & Methodology. It has no separate evaluation page.
+Navigation is in a top row, with a gradient background and updated typography.
+The Home page includes a short BPD overview linked to the NHLBI source.
+
 The app loads:
 
 ```text
@@ -14,9 +19,10 @@ clinical features plus 23,307 gene-symbol expression features. It performs its
 pipelines. Upload one infant per row, with gene symbols as columns and values
 prepared using the same probe-to-symbol mapping and expression scale as the
 training data. The app validates required columns and ignores additional ones.
-The input template contains zero placeholders, not usable measurements. To
-prepare a CSV from probe-level expression and clinical metadata, run from the
-repository root:
+The app offers a synthetic sample CSV for exploring the workflow. Its rows are
+fabricated demo values and must not be used for model evaluation. To prepare a
+CSV from probe-level expression and clinical metadata, run from the repository
+root:
 
 ```text
 python src/prepare_prediction_input.py --expression <probe_matrix.csv> --clinical <clinical_metadata.csv> --output <app_input.csv>
