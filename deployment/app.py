@@ -340,7 +340,13 @@ def render_predict(artifact) -> None:
                 return
         st.session_state["prediction_results"] = output
         st.session_state["prediction_source_name"] = uploaded.name
-        st.success(f"Generated predictions for {len(output):,} sample(s). Open Results to review them.")
+
+    saved_results = st.session_state.get("prediction_results")
+    if saved_results is not None:
+        st.success(
+            f"Generated predictions for {len(saved_results):,} sample(s). "
+            "Open Results to review them."
+        )
         if st.button("View results", key="view_results_button"):
             go_to("Results")
 
@@ -453,10 +459,6 @@ def render_timeline() -> None:
     st.write(
         "Explore aggregate gene-expression trends across the cohort’s three "
         "observed timepoints, grouped by recorded BPD category."
-    )
-    st.info(
-        "This is a descriptive cohort view, not an individual prediction. The "
-        "deployed classifier uses timepoint-3 inputs."
     )
     if not TIMELINE_PATH.exists():
         st.error(f"Longitudinal dataset was not found at {TIMELINE_PATH}")
